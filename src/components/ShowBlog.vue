@@ -1,7 +1,8 @@
 <template>
   <div id="show-blogs">
     <h1>All Blog Articles</h1>
-    <div v-for="post in posts" class="single-blog">
+    <input type="text" v-model="search" placeholder="search blogs">
+    <div v-for="post in filteredBlogs" class="single-blog">
       <h2 v-rainbow>{{post.title | to-uppercase}}</h2>
       <article>{{post.body | snippet}}</article>
     </div>
@@ -15,7 +16,8 @@
     name: "ShowBlog",
     data() {
       return {
-        posts: {}
+        posts: [],
+        search: ''
       }
     },
     methods: {},
@@ -25,6 +27,13 @@
         this.posts = response.data;
       } catch (e) {
         Console.log(e);
+      }
+    },
+    computed: {
+      filteredBlogs: function () {
+        return this.posts.filter((blog) => {
+          return blog.title.match(this.search);
+        });
       }
     }
   }
@@ -41,5 +50,13 @@
     margin: 20px 0;
     box-sizing: border-box;
     background: #eee;
+  }
+
+  input {
+    width: 96%;
+    margin-left: 1%;
+    height: 30px;
+    font-size: 16px;
+    padding-left: 5px;
   }
 </style>
