@@ -1,12 +1,12 @@
 <template>
   <div id="add-blog">
     <h2>Add a New Blog Post</h2>
-    <form>
+    <form v-if="!submitted">
       <label> Blog Title:
         <input type="text" v-model.lazy="blog.title" required>
       </label>
       <label> Blog Content:
-        <textarea v-model.lazy="blog.content"></textarea>
+        <textarea v-model="blog.content"></textarea>
       </label>
       <div id="checkboxes">
         <label>
@@ -31,7 +31,11 @@
           <option v-for="author in authors">{{author}}</option>
         </select>
       </label>
+      <button v-on:click.prevent="post">Add Blog</button>
     </form>
+    <div v-if="submitted">
+      <h3>Thanks for Submitting Blog!</h3>
+    </div>
     <div id="preview">
       <h3>Preview Blog</h3>
       <p>Blog title:{{blog.title}}</p>
@@ -47,6 +51,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   export default {
     name: "AddBlog",
     data(){
@@ -57,7 +62,23 @@
           categories: [],
           author: ''
         },
-        authors: ['The Net Ninja', 'The Angular Avenger', 'The Vue Vindicator']
+        authors: ['The Net Ninja', 'The Angular Avenger', 'The Vue Vindicator'],
+        submitted: false
+      }
+    },
+    methods: {
+      post: async function () {
+        try{
+          let response = await axios.post('https:jsonplaceholder.typicode.com/posts',{
+            title: this.blog.title,
+            body: this.blog.content,
+            userId: 420
+          });
+          console.log(response);
+          this.submitted = !this.submitted;
+        }catch (e){
+          console.log(e);
+        }
       }
     }
   }
