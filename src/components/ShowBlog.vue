@@ -2,8 +2,8 @@
   <div id="show-blogs">
     <h1>All Blog Articles</h1>
     <div v-for="post in posts" class="single-blog">
-      <h2>{{post.title}}</h2>
-      <article>{{post.body}}</article>
+      <h2 v-rainbow>{{post.title | to-uppercase}}</h2>
+      <article>{{post.body | snippet}}</article>
     </div>
   </div>
 </template>
