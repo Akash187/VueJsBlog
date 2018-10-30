@@ -1,16 +1,18 @@
 <template>
   <div>
-    <AddBlog/>
+    <ShowBlog/>
   </div>
 </template>
 
 <script>
-import AddBlog from './components/AddBlog'
+import AddBlog from './components/AddBlog';
+import ShowBlog from './components/ShowBlog';
 
 export default {
   name: 'app',
   components: {
-    AddBlog
+    AddBlog,
+    ShowBlog
   },
   data(){
     return {
