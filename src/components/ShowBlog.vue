@@ -6,7 +6,7 @@
       <router-link v-bind:to="'/blog/' + post.id">
         <h2 v-rainbow>{{post.title | toUppercase}}</h2>
       </router-link>
-      <article>{{post.body | snippet}}</article>
+      <article>{{post.content | snippet}}</article>
     </div>
   </div>
 </template>
@@ -26,8 +26,14 @@
     methods: {},
     async created() {
       try {
-        const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`);
-        this.posts = response.data;
+        const response = await axios.get(`https://vueblog-41061.firebaseio.com/posts.json`);
+        let blogArray = [];
+        let data = response.data;
+        for(let key in data){
+          data[key].id = key;
+          blogArray.push(data[key]);
+        }
+        this.posts = blogArray;
       } catch (e) {
         Console.log(e);
       }

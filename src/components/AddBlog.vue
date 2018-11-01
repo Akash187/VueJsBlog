@@ -69,11 +69,7 @@
     methods: {
       post: async function () {
         try{
-          let response = await axios.post('https:jsonplaceholder.typicode.com/posts',{
-            title: this.blog.title,
-            body: this.blog.content,
-            userId: 420
-          });
+          let response = await axios.post('https://vueblog-41061.firebaseio.com/posts.json',this.blog);
           console.log(response);
           this.submitted = !this.submitted;
         }catch (e){
